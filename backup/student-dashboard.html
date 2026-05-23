@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | CLASS-PASS — Lovely Professional University</title>
+    <meta name="description"
+        content="CLASS-PASS Student Portal: Find available classrooms in real time across LPU campus. Filter by building, floor, and capacity.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/student.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a href="index.html" class="sidebar-brand">
+            <div class="logo-icon">CP</div>
+            <div>
+                <h2>CLASS-PASS</h2><span>Smart Campus System</span>
+            </div>
+        </a>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Student Portal</div>
+                <div class="nav-item active"><i class="fas fa-th-large"></i>Dashboard</div>
+                <div class="nav-item"><i class="fas fa-door-open"></i>Classroom Availability<span
+                        class="badge" id="availBadge">—</span></div>
+                <a href="teacher-dashboard.html" class="nav-item"><i class="fas fa-bolt"></i>Emergency Booking</a>
+                <div class="nav-item"><i class="fas fa-chart-bar"></i>Reports</div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">System</div>
+                <div class="nav-item"><i class="fas fa-cog"></i>Settings</div>
+                <div class="nav-item"><i class="fas fa-question-circle"></i>Help Center</div>
+                <a href="login.html" class="nav-item" onclick="SensorAPI.logout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar">SK</div>
+                <div class="user-info">
+                    <h4>Surya Kumar</h4>
+                    <p>B.Tech CSE — 2026</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Lovely Professional <span>University</span></h1>
+            </div>
+            <div class="header-right">
+                <div class="header-time"><i class="fas fa-clock"></i><span id="liveTime">—</span></div>
+                <span class="role-badge student"><i class="fas fa-user-graduate"></i>Student</span>
+                <button class="notif-btn"><i class="fas fa-bell"></i><span class="dot"></span></button>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+            <!-- Stats Row -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-building"></i></div>
+                    <div class="stat-info">
+                        <h3 id="statTotal">—</h3>
+                        <p>Total Classrooms</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="statAvailable">—</h3>
+                        <p>Available Now</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="fas fa-times-circle"></i></div>
+                    <div class="stat-info">
+                        <h3 id="statOccupied">—</h3>
+                        <p>Occupied</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fas fa-clock"></i></div>
+                    <div class="stat-info">
+                        <h3 id="statReserved">—</h3>
+                        <p>Reserved</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <span class="filter-label"><i class="fas fa-filter"></i> Filters:</span>
+                <select class="filter-select" id="filterBuilding">
+                    <option value="all">All Buildings</option>
+                    <option value="Block 34">Block 34</option>
+                    <option value="Block 36">Block 36</option>
+                    <option value="Block 38">Block 38</option>
+                    <option value="Uni Mall">Uni Mall</option>
+                </select>
+                <select class="filter-select" id="filterFloor">
+                    <option value="all">All Floors</option>
+                    <option value="Ground Floor">Ground Floor</option>
+                    <option value="1st Floor">1st Floor</option>
+                    <option value="2nd Floor">2nd Floor</option>
+                    <option value="3rd Floor">3rd Floor</option>
+                    <option value="4th Floor">4th Floor</option>
+                </select>
+                <select class="filter-select" id="filterCapacity">
+                    <option value="all">Any Capacity</option>
+                    <option value="30-50">30–50</option>
+                    <option value="50-100">50–100</option>
+                    <option value="100-200">100–200</option>
+                    <option value="200">200+</option>
+                </select>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchRoom" placeholder="Search room number...">
+                </div>
+            </div>
+
+            <!-- Classroom Grid (rendered by JS) -->
+            <div class="classroom-grid" id="classroomGrid">
+                <!-- Cards injected by student.js -->
+            </div>
+        </div>
+
+        <footer class="page-footer">© 2026 CLASS-PASS · Lovely Professional University, Phagwara, Punjab · Smart
+            Campus Initiative</footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/sensor-data.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/student.js"></script>
+</body>
+
+</html>

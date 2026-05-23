@@ -1,0 +1,227 @@
+/* ============================================
+   CLASS-PASS — Student Portal Styles
+   Classroom grid, cards, filters, book buttons
+   ============================================ */
+
+/* ---------- Filters Bar ---------- */
+.filters-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.filters-bar .filter-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+/* ---------- Classroom Grid ---------- */
+.classroom-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    gap: 20px;
+}
+
+/* ---------- Classroom Card ---------- */
+.classroom-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid transparent;
+    transition: all .3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn .4s ease both;
+}
+
+.classroom-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+    border-color: var(--border);
+}
+
+.classroom-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+
+.classroom-card.available::before {
+    background: var(--success);
+}
+
+.classroom-card.occupied::before {
+    background: var(--danger);
+}
+
+.classroom-card.reserved::before {
+    background: var(--warning);
+}
+
+/* Staggered entrance animation */
+.classroom-card:nth-child(1) { animation-delay: .05s; }
+.classroom-card:nth-child(2) { animation-delay: .1s; }
+.classroom-card:nth-child(3) { animation-delay: .15s; }
+.classroom-card:nth-child(4) { animation-delay: .2s; }
+.classroom-card:nth-child(5) { animation-delay: .25s; }
+.classroom-card:nth-child(6) { animation-delay: .3s; }
+.classroom-card:nth-child(7) { animation-delay: .35s; }
+.classroom-card:nth-child(8) { animation-delay: .4s; }
+.classroom-card:nth-child(9) { animation-delay: .45s; }
+
+/* ---------- Card Internals ---------- */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+}
+
+.room-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-detail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-light);
+}
+
+.card-detail i {
+    width: 16px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-lighter);
+}
+
+.card-footer {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-footer .time-info {
+    font-size: 11px;
+    color: var(--text-lighter);
+}
+
+.card-footer .time-info i {
+    margin-right: 4px;
+}
+
+/* ---------- Book Button ---------- */
+.book-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: inherit;
+}
+
+.book-btn.primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.book-btn.primary:hover {
+    background: var(--primary-light);
+}
+
+.book-btn.disabled {
+    background: var(--bg);
+    color: var(--text-lighter);
+    cursor: not-allowed;
+}
+
+/* ---------- No Results Message ---------- */
+.no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-light);
+}
+
+.no-results i {
+    font-size: 48px;
+    color: var(--text-lighter);
+    margin-bottom: 16px;
+    display: block;
+}
+
+.no-results h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+}
+
+.no-results p {
+    font-size: 14px;
+}
+
+/* ---------- IoT Sensor Indicators ---------- */
+.sensor-indicators {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 12px;
+    padding: 8px 10px;
+    background: rgba(10, 31, 68, .03);
+    border-radius: 6px;
+    font-size: 11px;
+}
+
+.sensor-ind {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.sdot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.sdot.active {
+    background: var(--success);
+    box-shadow: 0 0 6px rgba(34, 197, 94, .4);
+}
+
+.sdot.idle {
+    background: var(--text-lighter);
+}
+
+.sensor-update {
+    margin-left: auto;
+    font-size: 10px;
+    color: var(--text-lighter);
+    font-style: italic;
+}

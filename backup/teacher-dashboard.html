@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard | CLASS-PASS — Lovely Professional University</title>
+    <meta name="description"
+        content="CLASS-PASS Teacher Portal: Report classroom issues, book emergency classrooms instantly across LPU campus.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/teacher.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a href="index.html" class="sidebar-brand">
+            <div class="logo-icon">CP</div>
+            <div>
+                <h2>CLASS-PASS</h2><span>Smart Campus System</span>
+            </div>
+        </a>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Teacher Portal</div>
+                <a href="student-dashboard.html" class="nav-item"><i class="fas fa-th-large"></i>Dashboard</a>
+                <a href="student-dashboard.html" class="nav-item"><i class="fas fa-door-open"></i>Classroom
+                    Availability</a>
+                <div class="nav-item active"><i class="fas fa-bolt"></i>Emergency Booking</div>
+                <div class="nav-item"><i class="fas fa-chart-bar"></i>Reports</div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">System</div>
+                <div class="nav-item"><i class="fas fa-cog"></i>Settings</div>
+                <div class="nav-item"><i class="fas fa-question-circle"></i>Help Center</div>
+                <a href="login.html" class="nav-item" onclick="SensorAPI.logout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar">SK</div>
+                <div class="user-info">
+                    <h4>Surya Kumar</h4>
+                    <p>B.Tech CSE — 2026</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Lovely Professional <span>University</span></h1>
+            </div>
+            <div class="header-right">
+                <div class="header-time"><i class="fas fa-clock"></i><span id="liveTime">—</span></div>
+                <span class="role-badge teacher"><i class="fas fa-chalkboard-teacher"></i>Teacher</span>
+                <button class="notif-btn"><i class="fas fa-bell"></i><span class="dot"></span></button>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+            <!-- Stats Row -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fas fa-bolt"></i></div>
+                    <div class="stat-info">
+                        <h3>3</h3>
+                        <p>Emergency Slots</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-door-open"></i></div>
+                    <div class="stat-info">
+                        <h3>42</h3>
+                        <p>Available Rooms</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-info">
+                        <h3>5</h3>
+                        <p>My Bookings Today</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3>2</h3>
+                        <p>Open Issues</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher Grid -->
+            <div class="teacher-grid">
+                <!-- Left Column: Emergency Booking -->
+                <div class="panel">
+                    <div class="panel-title"><i class="fas fa-bolt"></i>Emergency Booking</div>
+                    <div class="panel-subtitle">Quickly book the nearest available classroom</div>
+
+                    <div class="form-group">
+                        <label>Subject / Purpose</label>
+                        <input type="text" id="bookSubject" placeholder="e.g. Data Structures Lab">
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Building</label>
+                        <select id="prefBuilding">
+                            <option value="any">Any Building</option>
+                            <option value="Block 34">Block 34</option>
+                            <option value="Block 36">Block 36</option>
+                            <option value="Block 38">Block 38</option>
+                            <option value="Uni Mall">Uni Mall</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Required Capacity</label>
+                        <select id="prefCapacity">
+                            <option value="30-50">30–50 Students</option>
+                            <option value="50-100">50–100 Students</option>
+                            <option value="100-200">100–200 Students</option>
+                            <option value="200">200+ Students</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <select id="prefDuration">
+                            <option>1 Hour</option>
+                            <option>2 Hours</option>
+                            <option>3 Hours</option>
+                        </select>
+                    </div>
+
+                    <div class="suggested-room" id="suggestedRoom">
+                        <div class="room-icon"><i class="fas fa-star"></i></div>
+                        <div class="room-info">
+                            <h4>Suggested: Room 34-301</h4>
+                            <p>Block 34, 3rd Floor · Capacity 60 · Projector, Smart Board</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:20px;display:flex;gap:10px">
+                        <button class="btn btn-accent" id="bookClassroomBtn"><i class="fas fa-bolt"></i>Book
+                            Classroom</button>
+                        <a href="student-dashboard.html" class="btn btn-outline"><i class="fas fa-search"></i>Browse
+                            All</a>
+                    </div>
+                </div>
+
+                <!-- Right Column: Report Issue + Quick Actions -->
+                <div>
+                    <div class="panel" style="margin-bottom:20px">
+                        <div class="panel-title"><i class="fas fa-flag"></i>Report an Issue</div>
+                        <div class="panel-subtitle">Report equipment or facility problems</div>
+
+                        <div class="form-group">
+                            <label>Select Room</label>
+                            <select id="issueRoom">
+                                <option>34-301</option>
+                                <option>36-201</option>
+                                <option>38-105</option>
+                                <option>34-102</option>
+                                <option>36-401</option>
+                                <option>38-303</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label
+                                style="font-size:12px;font-weight:600;margin-bottom:8px;display:block">Issue Type</label>
+                            <div class="report-options">
+                                <span class="report-chip selected"><i class="fas fa-tv"></i> Projector</span>
+                                <span class="report-chip"><i class="fas fa-chalkboard"></i> Board</span>
+                                <span class="report-chip"><i class="fas fa-snowflake"></i> AC</span>
+                                <span class="report-chip"><i class="fas fa-lightbulb"></i> Lights</span>
+                                <span class="report-chip"><i class="fas fa-wifi"></i> WiFi</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="issueDescription" placeholder="Describe the issue briefly..."></textarea>
+                        </div>
+
+                        <button class="btn btn-danger" id="submitReportBtn"><i
+                                class="fas fa-exclamation-circle"></i>Submit Report</button>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-title"><i class="fas fa-th"></i>Quick Actions</div>
+                        <div class="quick-actions">
+                            <div class="quick-action"><i class="fas fa-calendar-alt"></i><span>My Schedule</span></div>
+                            <div class="quick-action"><i class="fas fa-history"></i><span>Booking History</span></div>
+                            <div class="quick-action"><i class="fas fa-map-marker-alt"></i><span>Campus Map</span>
+                            </div>
+                            <div class="quick-action"><i class="fas fa-headset"></i><span>IT Support</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="page-footer">© 2026 CLASS-PASS · Lovely Professional University, Phagwara, Punjab · Smart
+            Campus Initiative</footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/sensor-data.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/teacher.js"></script>
+</body>
+
+</html>

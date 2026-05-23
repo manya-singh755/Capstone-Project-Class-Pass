@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | CLASS-PASS — Lovely Professional University</title>
+    <meta name="description"
+        content="Sign in to CLASS-PASS Smart Campus System. Students: find empty classrooms. Teachers: book emergency rooms.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body class="login-body">
+
+    <!-- LEFT: Branding Panel -->
+    <div class="login-brand">
+        <div class="brand-content">
+            <div class="brand-logo">CP</div>
+            <h1>CLASS<span>-PASS</span></h1>
+            <p class="tagline">Smart IoT-powered classroom management for Lovely Professional University. Real-time
+                availability, emergency booking, and campus optimization.</p>
+
+            <!-- Live Sensor Preview -->
+            <div class="sensor-preview">
+                <div class="sensor-preview-title"><i class="fas fa-satellite-dish"></i>&nbsp; Live Sensor Status</div>
+                <div class="sensor-row">
+                    <div class="sensor-dot active" id="sensor1"></div>
+                    <span class="label">PIR-34-301-B · Board Sensor</span>
+                    <span class="value" id="sensor1val">Motion detected</span>
+                </div>
+                <div class="sensor-row">
+                    <div class="sensor-dot active" id="sensor2"></div>
+                    <span class="label">PIR-34-301-P · Projector Sensor</span>
+                    <span class="value" id="sensor2val">Active</span>
+                </div>
+                <div class="sensor-row">
+                    <div class="sensor-dot idle" id="sensor3"></div>
+                    <span class="label">PIR-38-105-B · Board Sensor</span>
+                    <span class="value" id="sensor3val">No motion (12m)</span>
+                </div>
+                <div class="sensor-row">
+                    <div class="sensor-dot alert" id="sensor4"></div>
+                    <span class="label">PIR-36-201-P · Projector Sensor</span>
+                    <span class="value" id="sensor4val">⚠ Malfunction</span>
+                </div>
+                <div class="sensor-row">
+                    <div class="sensor-dot active" id="sensor5"></div>
+                    <span class="label">PIR-38-303-B · Board Sensor</span>
+                    <span class="value" id="sensor5val">Motion detected</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: Login Form Panel -->
+    <div class="login-form-panel">
+        <div class="login-card">
+            <div class="university-badge">
+                <i class="fas fa-university"></i>
+                Lovely Professional University, Phagwara
+            </div>
+
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Sign in to access your CLASS-PASS dashboard</p>
+
+            <!-- Role Selector -->
+            <div class="role-tabs">
+                <button class="role-tab active" data-role="student" onclick="switchLoginRole('student', this)">
+                    <i class="fas fa-user-graduate"></i> Student
+                </button>
+                <button class="role-tab" data-role="teacher" onclick="switchLoginRole('teacher', this)">
+                    <i class="fas fa-chalkboard-teacher"></i> Teacher
+                </button>
+                <button class="role-tab" data-role="admin" onclick="switchLoginRole('admin', this)">
+                    <i class="fas fa-shield-alt"></i> Admin
+                </button>
+            </div>
+
+            <!-- Error Message -->
+            <div class="login-error" id="loginError">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="loginErrorText">Invalid credentials. Please try again.</span>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="login-field">
+                    <label id="uidLabel">Registration Number</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="loginUID" placeholder="e.g. 12312345" required autocomplete="username">
+                    </div>
+                </div>
+
+                <div class="login-field">
+                    <label>Password</label>
+                    <div class="input-wrap">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required
+                            autocomplete="current-password">
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="login-options">
+                    <label><input type="checkbox" checked> Remember me</label>
+                    <a href="#">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="login-submit" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="login-divider">or quick demo access</div>
+
+            <!-- Quick Demo Buttons -->
+            <div class="quick-access">
+                <button class="quick-access-btn" onclick="demoLogin('student')">
+                    <i class="fas fa-user-graduate"></i>
+                    <span>Demo Student</span>
+                </button>
+                <button class="quick-access-btn" onclick="demoLogin('teacher')">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <span>Demo Teacher</span>
+                </button>
+                <button class="quick-access-btn" onclick="demoLogin('admin')">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Demo Admin</span>
+                </button>
+            </div>
+
+            <div class="login-footer">
+                © 2026 CLASS-PASS · Capstone Project · B.Tech CSE
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/sensor-data.js"></script>
+    <script src="js/login.js"></script>
+</body>
+
+</html>

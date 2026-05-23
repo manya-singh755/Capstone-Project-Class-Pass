@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | CLASS-PASS — Lovely Professional University</title>
+    <meta name="description"
+        content="CLASS-PASS Admin Portal: View classroom utilization analytics, infrastructure issues, and campus optimization insights.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        /* Admin-specific styles */
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .admin-grid.triple {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, rgba(10, 31, 68, .03), rgba(232, 118, 45, .04));
+            border: 1px dashed var(--border);
+            border-radius: var(--radius);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: var(--text-light);
+        }
+
+        .chart-placeholder i {
+            font-size: 36px;
+            color: var(--accent);
+            opacity: .5;
+        }
+
+        .chart-placeholder p {
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .chart-placeholder small {
+            font-size: 11px;
+            color: var(--text-lighter);
+        }
+
+        /* Heatmap mockup */
+        .heatmap-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 4px;
+            margin-top: 12px;
+        }
+
+        .heat-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            transition: transform .2s;
+            cursor: pointer;
+        }
+
+        .heat-cell:hover {
+            transform: scale(1.2);
+        }
+
+        .heat-cell.low { background: rgba(34, 197, 94, .15); }
+        .heat-cell.med { background: rgba(245, 158, 11, .25); }
+        .heat-cell.high { background: rgba(239, 68, 68, .25); }
+        .heat-cell.peak { background: rgba(239, 68, 68, .5); }
+
+        .heat-legend {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+            font-size: 11px;
+            color: var(--text-lighter);
+        }
+
+        .heat-legend span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .heat-legend .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 3px;
+        }
+
+        .heat-legend .dot.low { background: rgba(34, 197, 94, .3); }
+        .heat-legend .dot.med { background: rgba(245, 158, 11, .4); }
+        .heat-legend .dot.high { background: rgba(239, 68, 68, .4); }
+        .heat-legend .dot.peak { background: rgba(239, 68, 68, .7); }
+
+        /* Issue list */
+        .issue-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .issue-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .issue-item:last-child {
+            border-bottom: none;
+        }
+
+        .issue-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .issue-icon.projector { background: rgba(239, 68, 68, .1); color: var(--danger); }
+        .issue-icon.board { background: rgba(245, 158, 11, .1); color: var(--warning); }
+        .issue-icon.ac { background: rgba(96, 165, 250, .1); color: #60a5fa; }
+
+        .issue-details h4 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .issue-details p {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+
+        .issue-time {
+            margin-left: auto;
+            font-size: 11px;
+            color: var(--text-lighter);
+            white-space: nowrap;
+        }
+
+        .coming-soon {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-light);
+        }
+
+        .coming-soon i {
+            font-size: 40px;
+            color: var(--accent);
+            opacity: .4;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .coming-soon h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .coming-soon p {
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <a href="index.html" class="sidebar-brand">
+            <div class="logo-icon">CP</div>
+            <div>
+                <h2>CLASS-PASS</h2><span>Smart Campus System</span>
+            </div>
+        </a>
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <div class="nav-section-title">Admin Portal</div>
+                <div class="nav-item active"><i class="fas fa-th-large"></i>Overview</div>
+                <a href="student-dashboard.html" class="nav-item"><i class="fas fa-door-open"></i>Classrooms</a>
+                <div class="nav-item"><i class="fas fa-chart-bar"></i>Analytics</div>
+                <div class="nav-item"><i class="fas fa-tools"></i>Infrastructure</div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">Portals</div>
+                <a href="student-dashboard.html" class="nav-item"><i class="fas fa-user-graduate"></i>Student View</a>
+                <a href="teacher-dashboard.html" class="nav-item"><i class="fas fa-chalkboard-teacher"></i>Teacher
+                    View</a>
+            </div>
+            <div class="nav-section">
+                <div class="nav-section-title">System</div>
+                <div class="nav-item"><i class="fas fa-cog"></i>Settings</div>
+                <div class="nav-item"><i class="fas fa-server"></i>IoT Sensors</div>
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar" style="background:linear-gradient(135deg,#0a1f44,#132d5e)">A</div>
+                <div class="user-info">
+                    <h4>Admin</h4>
+                    <p>System Administrator</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-left">
+                <h1>Lovely Professional <span>University</span></h1>
+            </div>
+            <div class="header-right">
+                <div class="header-time"><i class="fas fa-clock"></i><span id="liveTime">—</span></div>
+                <span class="role-badge teacher"><i class="fas fa-shield-alt"></i>Admin</span>
+                <button class="notif-btn"><i class="fas fa-bell"></i><span class="dot"></span></button>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+            <!-- Stats -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-icon blue"><i class="fas fa-building"></i></div>
+                    <div class="stat-info">
+                        <h3>156</h3>
+                        <p>Total Classrooms</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green"><i class="fas fa-percentage"></i></div>
+                    <div class="stat-info">
+                        <h3>73%</h3>
+                        <p>Avg. Utilization</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange"><i class="fas fa-satellite-dish"></i></div>
+                    <div class="stat-info">
+                        <h3>312</h3>
+                        <p>Active Sensors</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="stat-info">
+                        <h3>7</h3>
+                        <p>Open Issues</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Heatmap + Issues -->
+            <div class="admin-grid">
+                <div class="panel">
+                    <div class="panel-title"><i class="fas fa-fire"></i>Utilization Heatmap</div>
+                    <div class="panel-subtitle">Classroom usage by time-of-day (today)</div>
+                    <div class="heatmap-grid" id="heatmap">
+                        <!-- Generated by JS below -->
+                    </div>
+                    <div class="heat-legend">
+                        <span><div class="dot low"></div>Low</span>
+                        <span><div class="dot med"></div>Medium</span>
+                        <span><div class="dot high"></div>High</span>
+                        <span><div class="dot peak"></div>Peak</span>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-title"><i class="fas fa-tools"></i>Recent Issues</div>
+                    <div class="panel-subtitle">Infrastructure problems reported today</div>
+                    <ul class="issue-list">
+                        <li class="issue-item">
+                            <div class="issue-icon projector"><i class="fas fa-tv"></i></div>
+                            <div class="issue-details">
+                                <h4>Projector Malfunction — Room 36-201</h4>
+                                <p>Projector not displaying. Reported by Dr. Mehta</p>
+                            </div>
+                            <span class="issue-time">25 min ago</span>
+                        </li>
+                        <li class="issue-item">
+                            <div class="issue-icon board"><i class="fas fa-chalkboard"></i></div>
+                            <div class="issue-details">
+                                <h4>Smart Board Unresponsive — Room 34-102</h4>
+                                <p>Touch not working after restart. Reported by Prof. Gupta</p>
+                            </div>
+                            <span class="issue-time">1 hr ago</span>
+                        </li>
+                        <li class="issue-item">
+                            <div class="issue-icon ac"><i class="fas fa-snowflake"></i></div>
+                            <div class="issue-details">
+                                <h4>AC Not Cooling — Room 38-303</h4>
+                                <p>AC running but no cold air. Reported by Dr. Singh</p>
+                            </div>
+                            <span class="issue-time">2 hrs ago</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Coming Soon -->
+            <div class="admin-grid triple">
+                <div class="panel">
+                    <div class="coming-soon">
+                        <i class="fas fa-brain"></i>
+                        <h3>AI Predictions</h3>
+                        <p>ML-based occupancy forecasting coming in Phase 2</p>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="coming-soon">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile App</h3>
+                        <p>Student & teacher mobile application planned for future release</p>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="coming-soon">
+                        <i class="fas fa-qrcode"></i>
+                        <h3>QR Access</h3>
+                        <p>QR-based classroom check-in system under development</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="page-footer">© 2026 CLASS-PASS · Lovely Professional University, Phagwara, Punjab · Smart
+            Campus Initiative</footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/global.js"></script>
+    <script>
+        // Generate heatmap cells
+        const heatmap = document.getElementById('heatmap');
+        const levels = ['low', 'med', 'high', 'peak'];
+        // 7 rows (buildings) x 12 cols (hours: 8AM-8PM)
+        for (let r = 0; r < 7; r++) {
+            for (let c = 0; c < 12; c++) {
+                const cell = document.createElement('div');
+                cell.className = 'heat-cell';
+                // Simulate realistic patterns: morning & afternoon peaks
+                let level;
+                if (c >= 2 && c <= 4) level = levels[Math.floor(Math.random() * 2) + 2]; // peak hours
+                else if (c >= 6 && c <= 8) level = levels[Math.floor(Math.random() * 2) + 1]; // afternoon
+                else level = levels[Math.floor(Math.random() * 2)]; // off-peak
+                cell.classList.add(level);
+                cell.title = `Block ${r + 32}, ${8 + c}:00 — ${level.charAt(0).toUpperCase() + level.slice(1)} usage`;
+                heatmap.appendChild(cell);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+/* ============================================
+   CLASS-PASS — Teacher Portal Styles
+   Emergency booking, report issue, quick actions
+   ============================================ */
+
+/* ---------- Teacher Grid Layout ---------- */
+.teacher-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* ---------- Suggested Room Card ---------- */
+.suggested-room {
+    background: linear-gradient(135deg, rgba(10, 31, 68, .03), rgba(232, 118, 45, .05));
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.suggested-room .room-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 18px;
+}
+
+.suggested-room .room-info h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.suggested-room .room-info p {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 2px;
+}
+
+/* ---------- Report Options ---------- */
+.report-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.report-chip {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+    background: #fff;
+    color: var(--text-light);
+}
+
+.report-chip:hover,
+.report-chip.selected {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-glow);
+}
+
+/* ---------- Quick Actions ---------- */
+.quick-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.quick-action {
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: #fff;
+    cursor: pointer;
+    transition: all .2s;
+    text-align: center;
+}
+
+.quick-action:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.quick-action i {
+    font-size: 22px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: block;
+}
+
+.quick-action span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* ---------- Booking Confirmation Toast ---------- */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--primary);
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideInRight .3s ease;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+}
+
+.toast.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.toast i {
+    font-size: 20px;
+    color: var(--success);
+}
